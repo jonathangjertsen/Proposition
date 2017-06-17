@@ -32,7 +32,7 @@ In practice, you will be using this to pass a huge, automatically generated rang
   * uses generators to produce randomized values which fulfill the given constraints
   * pragmatic: common use-cases already included like integers, integers within a range, strings, "garbage" data, etc.
     * but it's still easy to pass in your own generator if you know how they work
-  * other than generators and callbacks, no use of "advanced" or "frameworky" features (e.g. interfaces). Functional programming features should be used with care.
+  * other than generators and callbacks, no use of "advanced" or "frameworky" features (there shall be no `Proposition\Interfaces\PropositionableIterators\PropositionableIteratorInterface`). Functional programming features may be useful here, but shall be used with care.
   * no packages in "require"
 * Easy to integrate with PHPUnit but there should be NO functionality specific to that.
 * Compatible with PHP v.7.0 and up but also v.5.6. Probably not below that.
