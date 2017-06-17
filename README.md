@@ -1,5 +1,5 @@
 # Proposition
-*Lightweight property-based testing for PHP, inspired by Python's Hypothesis library.*
+Lightweight property-based testing library for PHP. Inspired by Python's Hypothesis library.
 
 ## Example usage
 
@@ -39,6 +39,6 @@ In practice, you will be using this to pass a huge, automatically generated rang
 
 ## Status
 
-Currently, it just consists of my idea for an API and an implementation for simple cases. But I want to develop it into a nice package, since the other property-based libraries I found were either too fancy or abandoned.
+Currently, it just consists of my idea for an API and an implementation for simple cases. But I want to develop it into a nice package, since the other property-based testing libraries I found were either too fancy or abandoned.
 
 So contributors are welcome!
