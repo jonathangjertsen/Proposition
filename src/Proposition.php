@@ -318,7 +318,7 @@ class Proposition
     {
         $generator = self::chars($extended);
         while (true) {
-            yield self::stringsFromChars($max_len, $generator);
+            yield self::stringsFromChars($generator, $max_len);
         }
     }
 
@@ -333,7 +333,7 @@ class Proposition
     {
         $generator = self::letters();
         while (true) {
-            yield self::stringsFromChars($max_len, $generator);
+            yield self::stringsFromChars($generator, $max_len);
         }
     }
 
@@ -348,7 +348,7 @@ class Proposition
     {
         $generator = self::upperLetters($max_len);
         while (true) {
-            yield self::stringsFromChars($max_len, $generator);
+            yield self::stringsFromChars($generator, $max_len);
         }
     }
 
@@ -363,7 +363,7 @@ class Proposition
     {
         $generator = self::lowerLetters($max_len);
         while (true) {
-            yield self::stringsFromChars($max_len, $generator);
+            yield self::stringsFromChars($generator, $max_len);
         }
     }
 
@@ -410,7 +410,7 @@ class Proposition
     {
         while (true) {
             $ret = [];
-            for ($i = 0, $max = mt_rand(0, $max_array_size); $i <= $max; $i++) {
+            for ($i = 0, $max = mt_rand(0, $max_array_size); $i < $max; $i++) {
                 $ret[] = $input->current();
                 $input->next();
             }
@@ -568,10 +568,18 @@ class Proposition
         }
     }
 
-    private static function stringsFromChars($max_len, Generator &$char_generator)
+    /**
+     * Take a generator that makes chars and return a generator that makes strings out of those chars.
+     *
+     * @param Generator $char_generator
+     * @param           $max_len
+     *
+     * @return string
+     */
+    private static function stringsFromChars(Generator &$char_generator, $max_len)
     {
         $ret = [];
-        for ($i = 0, $max = mt_rand(0, $max_len); $i <= $max; $i++) {
+        for ($i = 0, $max = mt_rand(0, $max_len); $i < $max; $i++) {
             $ret[] = $char_generator->current();
             $char_generator->next();
         }
