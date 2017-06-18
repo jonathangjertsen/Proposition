@@ -28,6 +28,8 @@ See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki), especially
 
 Here's a toy example showing how you would use Proposition to check whether your awesome reimplementation of `abs($a) == abs($b)` actually works.
 
+    use Proposition/Proposition;
+
     function equal_magnitude($a, $b)
     {
         return ($a = $b) || ($a == -$b);
