@@ -43,6 +43,6 @@ In practice, you will be using this to pass a huge, automatically generated rang
 
 ## Status
 
-Most core functionality is complete. The plan is to fix issue #1 and issue #3, then release it on packagist.
+Most core functionality and documentation is complete. The plan is to fix issue #1 and issue #3, make some PHPUnit tests which test it with itself, then release it on packagist.
 
-So contributors are welcome!
+Contributors are welcome!
