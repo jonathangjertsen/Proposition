@@ -3,11 +3,14 @@ require __DIR__.'/../src/Proposition.php';
 
 use Proposition\Proposition;
 
-$input = [10, 20, 30, 40, 50];
+$input = [1, 2, 4, 8, 16];
+
+echo ("\nNote: cycleThrough is guaranteed to cover all elements in the array,\nbut the order is not preserved.\n");
+echo ("\nInput array: [" . implode(", ", $input) . "]\n\n");
 
 $proposition = new Proposition(25);
 $proposition
     ->given(Proposition::chooseFrom($input), Proposition::cycleThrough($input))
     ->call(function($elem1, $elem2) {
-        echo ("Random choice: {$elem1}, cycle: {$elem2}\n");
+        echo ("chooseFrom: {$elem1}\tcycleThrough: {$elem2}\n");
     });
