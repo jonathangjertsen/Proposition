@@ -438,6 +438,23 @@ class Proposition
     }
 
     /**
+     * Generate random characters from a custom charset.
+     *
+     * @param string $charset
+     *
+     * @return Generator
+     */
+    public static function charsFromCharset($charset)
+    {
+        $len = mb_strlen($charset);
+
+        while (true) {
+            $index = mt_rand(0, $len - 1);
+            yield $charset[$index];
+        }
+    }
+
+    /**
      * Generate random ASCII strings with a maximum length of $max_len.
      *
      * @param      $max_len
@@ -560,6 +577,22 @@ class Proposition
     public static function lowerStrings($max_len)
     {
         $generator = self::lowerLetters($max_len);
+        while (true) {
+            yield self::stringsFromChars($generator, $max_len);
+        }
+    }
+
+    /**
+     * Generate random characters from a custom charset.
+     *
+     * @param string $charset
+     *
+     * @return Generator
+     */
+    public static function stringsFromCharset($max_len, $charset)
+    {
+        $generator = self::charsFromCharset($charset);
+
         while (true) {
             yield self::stringsFromChars($generator, $max_len);
         }
