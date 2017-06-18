@@ -403,6 +403,20 @@ class Proposition
     }
 
     /**
+    public static function arraySchema(array $array)
+    {
+        while (true) {
+            $new_array = $array;
+            array_walk($new_array, function(Generator &$generator) {
+                $value = $generator->current();
+                $generator->next();
+                $generator = $value;
+            });
+            yield $new_array;
+        }
+    }
+
+    /**
      * Generates some values that a function will typically return if something is wrong, like null or an empty array.
      * Good for handling common failure modes.
      *
