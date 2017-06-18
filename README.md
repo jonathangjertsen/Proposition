@@ -1,6 +1,12 @@
 # Proposition
 Lightweight property-based testing library for PHP. Inspired by Python's Hypothesis library.
 
+## Installation
+
+Because the API is not fully stable yet, you must specify dev-master to composer install:
+
+    composer install jonathrg/proposition:dev-master
+
 ## What is property-based testing?
 
 According to [the first blog post I found about it](http://blog.jessitron.com/2013/04/property-based-testing-what-is-it.html),
