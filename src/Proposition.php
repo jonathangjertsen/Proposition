@@ -154,6 +154,81 @@ class Proposition
     }
 
     /**
+     * Generate random integers within the closed interval [$min, $max], i.e. including $min and $max.
+     *
+     * @param int $min Lower limit of integers to include.
+     * @param int $max Upper limit of integers to include.
+     *
+     * @return Generator
+     * @throws \Exception
+     */
+    public static function integerRange($min, $max)
+    {
+        $min = (int)$min;
+        $max = (int)$max;
+
+        if ($min > $max) {
+            throw new \Exception("Invalid integer range: \$max should be at least $min, but it was set to $max");
+        }
+
+        while (true) {
+            yield mt_rand($min, $max);
+        }
+    }
+
+    /**
+     * Same as integers, just with floats. We use a much lower initial limit.
+     *
+     * @return Generator
+     */
+    public static function floats()
+    {
+        // First, make sure the most common numbers are covered.
+        yield 0.0;
+        yield -1.0;
+        yield 1.0;
+
+        // Then generate random numbers from an increasing range.
+        $lim = 0.01;
+        $iterations = 0;
+        while (true) {
+            $iterations++;
+
+            yield $lim * (2 * mt_rand() / mt_getrandmax() - 1);
+
+            if ($lim <= mt_getrandmax() / 2) {
+                $lim *= 2;
+            } else {
+                // Start over when maxed out.
+                $lim = 0.01;
+            }
+        }
+    }
+
+    /**
+     * Same as integer range, just with floats.
+     *
+     * @param $min
+     * @param $max
+     *
+     * @return Generator
+     * @throws \Exception
+     */
+    public static function floatRange($min, $max)
+    {
+        $min = (float)$min;
+        $max = (float)$max;
+
+        if ($min > $max) {
+            throw new \Exception("Invalid integer range: \$max should be at least $min, but it was set to $max");
+        }
+
+        while (true) {
+            yield $min + mt_rand() / mt_getrandmax() * ($max - $min);
+        }
+    }
+
+    /**
      * Generate random bools.
      *
      * @return Generator
@@ -273,29 +348,6 @@ class Proposition
         $generator = self::lowerLetters($max_len);
         while (true) {
             yield self::stringsFromChars($max_len, $generator);
-        }
-    }
-
-    /**
-     * Generate random integers within the closed interval [$min, $max], i.e. including $min and $max.
-     *
-     * @param int $min Lower limit of integers to include.
-     * @param int $max Upper limit of integers to include.
-     *
-     * @return Generator
-     * @throws \Exception
-     */
-    public static function integerRange($min, $max)
-    {
-        $min = (int)$min;
-        $max = (int)$max;
-
-        if ($min > $max) {
-            throw new \Exception("Invalid integer range: \$max should be at least $min, but it was set to $max");
-        }
-
-        while (true) {
-            yield mt_rand($min, $max);
         }
     }
 
