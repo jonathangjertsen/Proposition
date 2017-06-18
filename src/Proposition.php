@@ -210,6 +210,16 @@ class Proposition
         }
     }
 
+    /**
+     * Generate integers in order, from $min to $max, with jumps of size $stride. Start over when finished.
+     *
+     * @param int $min
+     * @param int $max
+     * @param int $stride
+     *
+     * @return Generator
+     * @throws \Exception
+     */
     public static function everyInteger($min=0, $max=PHP_INT_MAX, $stride=1)
     {
         $min = (int)$min;
@@ -477,6 +487,14 @@ class Proposition
         }
     }
 
+    /**
+     * Generate arrays that fulfill the fiven input schema
+     *
+     * @param array $array Associative arrays where the values are generators that generate the values that the fields
+     *                     should have
+     *
+     * @return Generator
+     */
     public static function arraySchema(array $array)
     {
         while (true) {
@@ -490,6 +508,13 @@ class Proposition
         }
     }
 
+    /**
+     * Generates permutations of the array.
+     *
+     * @param array $array
+     *
+     * @return Generator
+     */
     public static function arrayPermutations(array $array)
     {
         while (true) {
@@ -511,6 +536,7 @@ class Proposition
             yield false;
             yield true;
             yield 0;
+            yield "0";
             yield [];
             yield "";
             yield new \stdClass();
