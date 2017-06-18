@@ -383,6 +383,26 @@ class Proposition
     }
 
     /**
+     * Generate arrays where the elements are given by the input generator.
+     *
+     * @param Generator $input
+     * @param           $max_array_size
+     *
+     * @return Generator
+     */
+    public static function arrays(Generator $input, $max_array_size)
+    {
+        while (true) {
+            $ret = [];
+            for ($i = 0, $max = mt_rand(0, $max_array_size); $i <= $max; $i++) {
+                $ret[] = $input->current();
+                $input->next();
+            }
+            yield $ret;
+        }
+    }
+
+    /**
      * Generates some values that a function will typically return if something is wrong, like null or an empty array.
      * Good for handling common failure modes.
      *
