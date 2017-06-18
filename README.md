@@ -1,6 +1,10 @@
 # Proposition
 Lightweight property-based testing library for PHP. Inspired by Python's Hypothesis library.
 
+## Documentation
+
+See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki)
+
 ## Example usage
 
 Here's a toy example showing how you would use Proposition to check whether your awesome reimplementation of `abs($a) == abs($b)` actually works.
@@ -23,8 +27,6 @@ Here's a toy example showing how you would use Proposition to check whether your
 Oops! We're getting a lot of error messages. We will quickly discover that we used a `=` where we should have used a `==` in our function.
 
 In practice, you will be using this to pass a huge, automatically generated range of values into your functions and check that some property *always* holds. You might for example want to check that the output of a function has a certain relationship to your input, that the function did or did not throw an exception, and so on.
-
-For more info, see the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki)
 
 ## Project goals
 
