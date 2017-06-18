@@ -1,6 +1,19 @@
 # Proposition
 Lightweight property-based testing library for PHP. Inspired by Python's Hypothesis library.
 
+## What is property-based testing?
+
+According to [the first blog post I found about it](http://blog.jessitron.com/2013/04/property-based-testing-what-is-it.html),
+
+> Property-based tests make statements about the output of your code based on the input, and these statements are
+verified for many different possible inputs. A property-based testing framework runs the same test over and over
+with generated input.
+
+This is in contrast to example-based testing, where you have to hand-write your inputs. A property-based testing library
+like Proposition lets you test your code with thousands and thousands of input combinations (including all sorts of edge
+ cases)with just a few lines of code. As an example, Proposition uses itself to test itself, and does so with about 4000
+ assertions per line of test code.
+
 ## Documentation
 
 See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki)
