@@ -8,6 +8,10 @@ class Proposition
     /** Default maximum number of tests to run. */
     const DEFAULT_MAX_TESTS = 100;
 
+    /** Default chunk size to use for reshuffling generators. It's kind of low, since the memory footprint from each
+     *  generator is multiplied by approx. this value */
+    const DEFAULT_RESHUFFLE_CHUNK_SIZE = 10;
+
     /** @var int Maximum number of tests to run. */
     private $max_tests;
 
@@ -19,9 +23,14 @@ class Proposition
      *
      * @param int $max_tests
      */
-    public function __construct($max_tests = self::DEFAULT_MAX_TESTS)
+    public function __construct(
+        $name = false,
+        $max_tests = self::DEFAULT_MAX_TESTS,
+        $reshuffle_chunk_size = self::DEFAULT_RESHUFFLE_CHUNK_SIZE
+    )
     {
         $this->max_tests = (int)$max_tests;
+        $this->reshuffle_chunk_size = (int)$reshuffle_chunk_size;
     }
 
     /**
@@ -515,6 +524,28 @@ class Proposition
             $generators[$index]->next();
         }
     }
+
+    /**
+     * Streams in chunks from the input, reshuffles them, and outputs elements in a shuffled order.
+     *
+     * @param Generator $input
+     * @param           $chunk_size
+     */
+    public static function reshuffle(Generator $input, $chunk_size)
+    {
+        while (true) {
+            $chunk = [];
+            for ($i = 0; $i < $chunk_size; $i++) {
+                $chunk[] = $input->current();
+                $input->next();
+            }
+            shuffle($chunk);
+            foreach($chunk as $element) {
+                yield $element;
+            }
+        }
+    }
+
     // The following are internal help functions.
 
     /**
