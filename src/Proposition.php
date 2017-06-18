@@ -352,6 +352,37 @@ class Proposition
     }
 
     /**
+     * Generate values chosen from the input array.
+     *
+     * @param array $input
+     *
+     * @return Generator
+     */
+    public static function chooseFrom(array $input)
+    {
+        $input = array_values($input);
+        while (true) {
+            yield $input[mt_rand(0, count($input) - 1)];
+        }
+    }
+
+    /**
+     * Generate values chosen from the input array, in order.
+     *
+     * @param array $input
+     *
+     * @return Generator
+     */
+    public static function cycleThrough(array $input)
+    {
+        while (true) {
+            foreach ($input as $element) {
+                yield $element;
+            }
+        }
+    }
+
+    /**
      * Generates some values that a function will typically return if something is wrong, like null or an empty array.
      * Good for handling common failure modes.
      *
