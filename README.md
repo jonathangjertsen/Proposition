@@ -16,7 +16,7 @@ like Proposition lets you test your code with thousands and thousands of input c
 
 ## Documentation
 
-See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki)
+See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki), especially the [Quick reference](https://github.com/jonathangjertsen/Proposition/wiki/Quick-Reference)
 
 ## Example usage
 
