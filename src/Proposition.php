@@ -116,7 +116,11 @@ class Proposition
     public static function stream(callable $callable, ...$args)
     {
         while(true) {
-            yield $callable(...$args);
+            if (is_callable($callable)) {
+                yield $callable(...$args);
+            } else {
+                yield $callable;
+            }
         }
     }
 
