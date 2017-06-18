@@ -104,6 +104,21 @@ class Proposition
         }
     }
 
+    /**
+     * Convert the $callable to an infinite stream by calling it forever, yielding its value each time.
+     *
+     * @param callable $callable
+     * @param          ...$args
+     *
+     * @return Generator
+     */
+    public static function stream(callable $callable, ...$args)
+    {
+        while(true) {
+            yield $callable(...$args);
+        }
+    }
+
     // The following are generators which can be passed into given(), covering common use-cases.
 
     /**
