@@ -154,6 +154,129 @@ class Proposition
     }
 
     /**
+     * Generate random bools.
+     *
+     * @return Generator
+     */
+    public static function bools()
+    {
+        while (true) {
+            yield !mt_rand(0,1);
+        }
+    }
+
+    /**
+     * Generate random ASCII characters.
+     *
+     * @param bool $extended Whether to use the extended ASCII codes.
+     *
+     * @return Generator
+     */
+    public static function chars($extended = false)
+    {
+        while (true) {
+            yield chr(mt_rand(0, 128 * (1 + $extended) - 1));
+        }
+    }
+
+    /**
+     * Generate random letters, lowercase or uppercase.
+     *
+     * @return Generator
+     */
+    public static function letters()
+    {
+        while (true) {
+            yield mt_rand(0, 1) ? chr(mt_rand(65,90)) : chr(mt_rand(97,122));
+        }
+    }
+
+    /**
+     * Generate random uppercase letters.
+     *
+     * @return Generator
+     */
+    public static function upperLetters()
+    {
+        while (true) {
+            yield chr(mt_rand(65,90));
+        }
+    }
+
+    /**
+     * Generate random lowercase letters.
+     *
+     * @return Generator
+     */
+    public static function lowerLetters()
+    {
+        while (true) {
+            yield chr(mt_rand(97,122));
+        }
+    }
+
+    /**
+     * Generate random ASCII strings with a maximum length of $max_len.
+     *
+     * @param      $max_len
+     * @param bool $extended Whether to use the extended ASCII codes.
+     *
+     * @return Generator
+     */
+    public static function asciiStrings($max_len, $extended = false)
+    {
+        $generator = self::chars($extended);
+        while (true) {
+            yield self::stringsFromChars($max_len, $generator);
+        }
+    }
+
+    /**
+     * Generate random letter strings with a maximum length of $max_len.
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function letterStrings($max_len)
+    {
+        $generator = self::letters();
+        while (true) {
+            yield self::stringsFromChars($max_len, $generator);
+        }
+    }
+
+    /**
+     * Generate random uppercase letter strings with a maximum length of $max_len
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function upperLetterStrings($max_len)
+    {
+        $generator = self::upperLetters($max_len);
+        while (true) {
+            yield self::stringsFromChars($max_len, $generator);
+        }
+    }
+
+    /**
+     * Generate random lowercase letter strings with a maximum length of $max_len
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function lowerLetterStrings($max_len)
+    {
+        $generator = self::lowerLetters($max_len);
+        while (true) {
+            yield self::stringsFromChars($max_len, $generator);
+        }
+    }
+
+    /**
      * Generate random integers within the closed interval [$min, $max], i.e. including $min and $max.
      *
      * @param int $min Lower limit of integers to include.
@@ -251,5 +374,15 @@ class Proposition
 
             yield $arg_list;
         }
+    }
+
+    private static function stringsFromChars($max_len, Generator &$char_generator)
+    {
+        $ret = [];
+        for ($i = 0, $max = mt_rand(0, $max_len); $i <= $max; $i++) {
+            $ret[] = $char_generator->current();
+            $char_generator->next();
+        }
+        return implode('', $ret);
     }
 }
