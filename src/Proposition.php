@@ -329,7 +329,7 @@ class Proposition
     {
         $numeric = '0123456789';
         while (true) {
-            $index = mt_rand(0, 10);
+            $index = mt_rand(0, 9);
             yield $numeric[$index];
         }
     }
@@ -820,6 +820,7 @@ class Proposition
     }
 
 
+    /**
      * Streams in chunks from the input, reshuffles them, and outputs elements in a shuffled order.
      *
      * @param Generator $input
