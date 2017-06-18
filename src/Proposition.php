@@ -94,6 +94,9 @@ class Proposition
             }
         }
 
+        // Reset
+        $this->generators = [];
+
         if ($return_values) {
             return $results;
         } else {
