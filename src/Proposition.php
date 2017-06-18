@@ -454,6 +454,14 @@ class Proposition
         }
     }
 
+    public static function arrayPermutations(array $array)
+    {
+        while (true) {
+            shuffle($array);
+            yield $array;
+        }
+    }
+
     /**
      * Generates some values that a function will typically return if something is wrong, like null or an empty array.
      * Good for handling common failure modes.
