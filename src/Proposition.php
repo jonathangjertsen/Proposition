@@ -748,6 +748,45 @@ class Proposition
     }
 
     /**
+     * @param array|Generator ...$generators
+     *
+     * @return Generator
+     */
+    public static function weightedCombine(...$descriptors)
+    {
+        /** @var float[]|int[] $weights */
+        $weights = array_column($descriptors, 'weight');
+
+        /** @var Generator[] $generators */
+        $generators = array_column($descriptors, 'generator');
+
+        $integrated_weights = [];
+        $running_sum = 0;
+        foreach ($weights as $weight) {
+            if ($weight < 0) {
+                throw new \Exception("Weight can not be less than 0 (was $weight)");
+            }
+
+            $running_sum += $weight;
+            $integrated_weights[] = $running_sum;
+        }
+
+        while (true)
+        {
+            $location = mt_rand(0, $running_sum);
+
+            $index = 0;
+            while ($integrated_weights[$index++] < $location);
+
+            // Pick a random generator.
+            yield $generators[$index]->current();
+
+            // Iterate the generator for next time.
+            $generators[$index]->next();
+        }
+    }
+
+
      * Streams in chunks from the input, reshuffles them, and outputs elements in a shuffled order.
      *
      * @param Generator $input
