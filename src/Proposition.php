@@ -24,7 +24,6 @@ class Proposition
      * @param int $max_tests
      */
     public function __construct(
-        $name = false,
         $max_tests = self::DEFAULT_MAX_TESTS,
         $reshuffle_chunk_size = self::DEFAULT_RESHUFFLE_CHUNK_SIZE
     )
@@ -74,10 +73,12 @@ class Proposition
      *
      * @param bool     $return_values Whether to store and return whatever $hypothesis returns.
      *
-     * @return null|array             If $return_values is true, it will be an array of arrays with two entries:
+     * @return Proposition|array      If $return_values is true, it will be an array of arrays with two entries:
      *                                'argument' and 'result'. Each 'arguments' is an array with the arguments that
      *                                Proposition tried to pass into the $hypothesis, and 'result' is whatever the
      *                                $hypothesis returned.
+     *
+     *                                Otherwise, $this is returned.
      */
     public function call(callable $hypothesis, $return_values = false)
     {
@@ -100,7 +101,7 @@ class Proposition
         if ($return_values) {
             return $results;
         } else {
-            return null;
+            return $this;
         }
     }
 
@@ -320,14 +321,89 @@ class Proposition
     }
 
     /**
+     * Generate random numeric characters.
+     *
+     * @return Generator
+     */
+    public static function numericChars()
+    {
+        $numeric = '0123456789';
+        while (true) {
+            $index = mt_rand(0, 10);
+            yield $numeric[$index];
+        }
+    }
+
+    /**
+     * Generate random alpanumeric characters. Letters are as likely as numbers.
+     *
+     * @return Generator
+     */
+    public static function alphanumerics()
+    {
+        $alphanumeric = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        while (true) {
+            $index = mt_rand(0, 61);
+            yield $alphanumeric[$index];
+        }
+    }
+
+
+    /**
+     * Generate random hexadecimal characters.
+     *
+     * @param bool $lowercase Whether it should use a,b,c,d,e,f instead of the default A,B,C,D,E,F
+     *
+     * @return Generator
+     */
+    public static function hexChars($lowercase = false)
+    {
+        if ($lowercase) {
+            $hex = '0123456789abcdef';
+        } else {
+            $hex = '0123456789ABCDEF';
+        }
+        while (true) {
+            $index = mt_rand(0, 15);
+            yield $hex[$index];
+        }
+    }
+
+    /**
+     * Generate random base64 characters.
+     *
+     * @param bool $url_variant Whether it should use the URL-safe variant instead of the default base64encode variant
+     *
+     * @return Generator
+     */
+    public static function base64Chars($url_variant)
+    {
+        $base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+        if ($url_variant) {
+            $base64[62] = '-';
+            $base64[63] = '_';
+        }
+
+        while (true) {
+            $index = mt_rand(0, 63);
+            yield $base64[$index];
+        }
+    }
+
+    /**
      * Generate random letters, lowercase or uppercase.
      *
      * @return Generator
      */
     public static function letters()
     {
+        $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
         while (true) {
-            yield mt_rand(0, 1) ? chr(mt_rand(65,90)) : chr(mt_rand(97,122));
+            $index = mt_rand(0, 51);
+            yield $letters[$index];
         }
     }
 
@@ -338,8 +414,11 @@ class Proposition
      */
     public static function upperLetters()
     {
+        $upper_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
         while (true) {
-            yield chr(mt_rand(65,90));
+            $index = mt_rand(0, 25);
+            yield $upper_letters[$index];
         }
     }
 
@@ -350,8 +429,11 @@ class Proposition
      */
     public static function lowerLetters()
     {
+        $lower_letters = 'abcdefghijklmnopqrstuvwxyz';
+
         while (true) {
-            yield chr(mt_rand(97,122));
+            $index = mt_rand(0, 25);
+            yield $lower_letters[$index];
         }
     }
 
@@ -368,6 +450,73 @@ class Proposition
         $generator = self::chars($extended);
         while (true) {
             yield self::stringsFromChars($generator, $max_len);
+        }
+    }
+
+    /**
+     * Generate random alphanumeric strings with a maximum length of $max_len.
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function alphanumericStrings($max_len)
+    {
+        $generator = self::alphanumerics();
+        while (true) {
+            yield self::stringsFromChars($generator, $max_len);
+        }
+    }
+
+    /**
+     * Generate random numeric strings with a maximum length of $max_len.
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function numericStrings($max_len)
+    {
+        $generator = self::numericChars();
+        while (true) {
+            yield self::stringsFromChars($generator, $max_len);
+        }
+    }
+
+    /**
+     * Generate random hex strings with a maximum length of $max_len.
+     *
+     * @param $max_len
+     *
+     * @return Generator
+     */
+    public static function hexStrings($max_len, $lowercase = false)
+    {
+        $generator = self::hexChars($lowercase);
+        while (true) {
+            yield self::stringsFromChars($generator, $max_len);
+        }
+    }
+
+    /**
+     * Generate random hex strings with a maximum length of $max_len.
+     *
+     * @param int $max_len
+     * @param bool $url_variant
+     *
+     * @return Generator
+     */
+    public static function base64Strings($max_len, $url_variant = false)
+    {
+        $generator = self::base64Chars($url_variant);
+        while (true) {
+            $base_string = self::stringsFromChars($generator, $max_len);
+            if ($url_variant) {
+                yield $base_string;
+            } else {
+                $padding = str_repeat("=", strlen($base_string) % 4);
+                yield $base_string . $padding;
+            }
         }
     }
 
@@ -393,7 +542,7 @@ class Proposition
      *
      * @return Generator
      */
-    public static function upperLetterStrings($max_len)
+    public static function upperStrings($max_len)
     {
         $generator = self::upperLetters($max_len);
         while (true) {
@@ -408,7 +557,7 @@ class Proposition
      *
      * @return Generator
      */
-    public static function lowerLetterStrings($max_len)
+    public static function lowerStrings($max_len)
     {
         $generator = self::lowerLetters($max_len);
         while (true) {
