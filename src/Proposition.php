@@ -195,6 +195,27 @@ class Proposition
         }
     }
 
+    public static function everyInteger($min=0, $max=PHP_INT_MAX, $stride=1)
+    {
+        $min = (int)$min;
+        $max = (int)$max;
+        $stride = (int)$stride;
+
+        if ($min > $max) {
+            throw new \Exception("Invalid integer range: \$max should be at least $min, but it was set to $max");
+        }
+
+        if ($stride < 1) {
+            throw new \Exception("Invalid integer range: \$stride should be at least 1, but it was set to $stride");
+        }
+
+        while (true) {
+            for ($int = $min; $int < $max; $int++) {
+                yield $int;
+            }
+        }
+    }
+
     /**
      * Same as integers, just with floats. We use a much lower initial limit.
      *
