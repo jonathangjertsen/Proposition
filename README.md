@@ -24,6 +24,8 @@ Oops! We're getting a lot of error messages. We will quickly discover that we us
 
 In practice, you will be using this to pass a huge, automatically generated range of values into your functions and check that some property *always* holds. You might for example want to check that the output of a function has a certain relationship to your input, that the function did or did not throw an exception, and so on.
 
+For more info, see the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki)
+
 ## Project goals
 
 * Extremely lightweight and easy to use
