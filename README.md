@@ -11,8 +11,8 @@ with generated input.
 
 This is in contrast to example-based testing, where you have to hand-write your inputs. A property-based testing library
 like Proposition lets you test your code with thousands and thousands of input combinations (including all sorts of edge
- cases)with just a few lines of code. As an example, Proposition uses itself to test itself, and does so with about 4000
- assertions per line of test code.
+ cases) with just a few lines of code. As an example, Proposition uses itself to test itself, and does so with about
+ 4000 assertions per line of test code.
 
 ## Documentation
 
