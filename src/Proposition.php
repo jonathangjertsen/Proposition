@@ -40,8 +40,15 @@ class Proposition
      *
      * @return $this to allow chaining methods.
      */
-    public function given(Generator ...$generators)
+    public function given(...$generators)
     {
+        foreach ($generators as &$generator) {
+            if (is_array($generator)) {
+                $generator = self::combine(...$generator);
+            }
+
+            $generator = self::reshuffle($generator, $this->reshuffle_chunk_size);
+        }
         array_push($this->generators, ...$generators);
 
         return $this;
@@ -471,6 +478,24 @@ class Proposition
         }
     }
 
+    /**
+     * @param array|Generator ...$generators
+     *
+     * @return Generator
+     */
+    public static function combine(...$generators)
+    {
+        while (true)
+        {
+            $index = rand(0, count($generators) - 1);
+
+            // Pick a random generator.
+            yield $generators[$index]->current();
+
+            // Iterate the generator for next time.
+            $generators[$index]->next();
+        }
+    }
     // The following are internal help functions.
 
     /**
