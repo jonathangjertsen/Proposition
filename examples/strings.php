@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../src/Proposition.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use \Proposition\Proposition;
 
