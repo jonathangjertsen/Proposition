@@ -410,6 +410,25 @@ class Proposition
     }
 
     /**
+     * Generate arrays where the elements are given by the input generator and the arrays always have a given length
+     *
+     * @param Generator $input
+     * @param           $array_size
+     *
+     * @return Generator
+     */
+    public static function fixedLengthArrays(Generator $input, $array_size)
+    {
+        while (true) {
+            $ret = [];
+            for ($i = 0, $max = $array_size; $i < $max; $i++) {
+                $ret[] = $input->current();
+                $input->next();
+            }
+            yield $ret;
+        }
+    }
+
     public static function arraySchema(array $array)
     {
         while (true) {
