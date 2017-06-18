@@ -54,14 +54,15 @@ In practice, you will be using this to pass a huge, automatically generated rang
 ## Project goals
 
 * Extremely lightweight and easy to use
-  * only **one** class to `use`
-  * dead simple API, which reads like English when you use good variable names
-  * uses generators to produce randomized values which fulfill the given constraints
-  * pragmatic: common use-cases already included like integers, integers within a range, strings, "garbage" data, etc.
-    * but it's still easy to pass in your own generator if you know how they work
-  * other than generators and callbacks, no use of "advanced" or "frameworky" features (there shall be no `Proposition\Interfaces\PropositionableIterators\PropositionableIteratorInterface`). Functional programming features may be useful here, but shall be used with care.
+  * You only need to `use` **one** class.
+    * A simple trait for PHPUnit tests may be included in the future.
+  * Dead simple API, which reads like English when you use good variable names.
+  * Uses generators to produce randomized values which fulfill the given constraints.
+  * Pragmatic: common use-cases already included like integers, integers within a range, strings, "garbage" data, etc.
+    * But we do not need generators for every possible use-case. You are free to transform your values however you want in the callback to `call`, and you can use the `Proposition::stream()` method to generate values your own way.
+  * Other than generators and callbacks, no use of "advanced" or "frameworky" features (there shall be no `Proposition\Interfaces\PropositionableIterators\PropositionableIteratorInterface`).
   * no packages in "require"
-* Easy to integrate with PHPUnit but there should be NO functionality specific to that.
+* Easy to integrate with PHPUnit but there should be NO functionality specific to that in the main `Proposition` class.
 * Compatible with PHP v.7.0 and up but also v.5.6. Probably not below that.
 
 ## Status
