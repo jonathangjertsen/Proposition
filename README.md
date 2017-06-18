@@ -41,6 +41,6 @@ For more info, see the [Wiki](https://github.com/jonathangjertsen/Proposition/wi
 
 ## Status
 
-Currently, it just consists of my idea for an API and an implementation for simple cases. But I want to develop it into a nice package, since the other property-based testing libraries I found were either too fancy or abandoned.
+Most core functionality is complete. The plan is to fix issue #1 and issue #3, then release it on packagist.
 
 So contributors are welcome!
