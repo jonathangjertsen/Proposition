@@ -26,6 +26,8 @@ See the [Wiki](https://github.com/jonathangjertsen/Proposition/wiki), especially
 
 ## Example usage
 
+There are some examples of the values Proposition generates in the `examples` folder. Run them with PHP from the command line (see the readme.md there)
+
 Here's a toy example showing how you would use Proposition to check whether your awesome reimplementation of `abs($a) == abs($b)` actually works.
 
     use Proposition/Proposition;
